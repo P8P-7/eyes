@@ -25,13 +25,11 @@ int main(int argc, char *argv[])  {
 
     QObject *root = engine.rootObjects().value(0);
 
-    eyes::EmotionHandler *emotion = root->findChild<eyes::EmotionHandler*>("emotion");
+    auto *emotion = root->findChild<eyes::EmotionHandler*>("emotion");
 
-    emit emotion->emotionChanged();
-
-    emotion->setEmotion(::ANGRY);
-
-    emit emotion->emotionChanged();
+    subscriber.bind(MessageCarrier::MessageCase::kEmotionMessage, [&emotion](const MessageCarrier &carrier){
+        emotion->setEmotion(carrier.emotionmessage().emotion());
+    });
 
     return app.exec();
 }

@@ -12,8 +12,9 @@ eyes::EmotionHandler::EmotionValue eyes::EmotionHandler::emotion() const {
 
 void eyes::EmotionHandler::setEmotion(const EmotionValue& emotion) {
     m_emotion = emotion;
+    emit emotionChanged();
 }
 
 void eyes::EmotionHandler::setEmotion(const Emotion& emotion) {
-    m_emotion = static_cast<EmotionValue>(emotion);
+    setEmotion(static_cast<EmotionValue>(emotion));
 }

@@ -9,7 +9,7 @@ Window {
     visible: true
     title: "Goliath II's Eyes"
     color: "black"
-    //visibility: "FullScreen"
+    visibility: "FullScreen"
 
     EmotionHandler {
         objectName: "emotion"
