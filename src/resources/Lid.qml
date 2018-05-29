@@ -7,7 +7,7 @@ Shape {
     property bool inverse: false
 
     ShapePath {
-        fillColor: "black"
+        fillColor: "red"
         strokeColor: "black"
 
         startX: -parent.width * 0.1

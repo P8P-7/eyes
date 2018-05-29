@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import goliath.eyes 1.0
 import QtGraphicalEffects 1.0
 
 Item {
@@ -11,6 +12,62 @@ Item {
 
     x: isRight ? width : 0
     y: parent.height / 2 - height / 2
+
+    state: EmotionHandler.NEUTRAL
+
+    states: [
+        State {
+            name: EmotionHandler.ANGRY
+            PropertyChanges {
+                target: topLid
+            }
+        },
+        State {
+            name: EmotionHandler.SAD
+            PropertyChanges {
+                target: topLid
+            }
+        },
+        State {
+            name: EmotionHandler.SUPRISED
+            PropertyChanges {
+                target: topLid
+            }
+        },
+        State {
+            name: EmotionHandler.HAPPY
+            PropertyChanges {
+                target: topLid
+            }
+        }
+    ]
+
+    transitions: [
+        Transition {
+            from: EmotionHandler.NEUTRAL
+            to: EmotionHandler.ANGRY
+            reversible: true
+            // TODO: Implement angry animation
+        },
+        Transition {
+            from: EmotionHandler.NEUTRAL
+            to: EmotionHandler.SAD
+            reversible: true
+            // TODO: Implement sad animation
+        },
+        Transition {
+            from: EmotionHandler.NEUTRAL
+            to: EmotionHandler.SUPRISED
+            reversible: true
+            // TODO: Implement suprised animation
+        },
+        Transition {
+            from: EmotionHandler.NEUTRAL
+            to: EmotionHandler.HAPPY
+            reversible: true
+            // TODO: Implement happy animation
+        }
+    ]
 
     Rectangle {
         id: iris
@@ -39,27 +96,7 @@ Item {
         inverse: true
     }
 
-    function neutral() {
-        // TODO: Implement neutral animation
-    }
-
     function blink() {
         // TODO: Implement blink animation
-    }
-
-    function angry(browDirection) {
-        // TODO: Implement angry animation
-    }
-
-    function sad(browDirection) {
-        // TODO: Implement sad animation
-    }
-
-    function suprised() {
-        // TODO: Implement suprised animation
-    }
-
-    function happy() {
-        // TODO: Implement happy animation
     }
 }

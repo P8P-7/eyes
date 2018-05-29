@@ -15,27 +15,15 @@ Window {
         objectName: "emotion"
         onEmotionChanged: {
             switch (emotion) {
-                case EmotionHandler.ANGRY:
-                    console.log("Angry");
-                    break;
-                case EmotionHandler.SAD:
-                    console.log("Sad :(");
-                    break;
-                case EmotionHandler.SUPRISED:
-                    console.log("Suprised");
-                    break;
-                case EmotionHandler.HAPPY:
-                    console.log("Happy");
-                    break;
                 case EmotionHandler.WINK_LEFT:
-                    console.log("Wink Left");
+                    leftEye.blink();
                     break;
                 case EmotionHandler.WINK_RIGHT:
-                    console.log("Wink Right");
+                    rightEye.blink();
                     break;
-                case EmotionHandler.NEUTRAL:
                 default:
-                    console.log("Neutral");
+                    rightEye.state = emotion;
+                    leftEye.state = emotion;
                     break;
             }
         }
