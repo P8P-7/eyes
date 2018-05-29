@@ -1,102 +1,209 @@
-import QtQuick 2.0
+import QtQuick 2.9
+import QtQuick.Shapes 1.5
 import goliath.eyes 1.0
-import QtGraphicalEffects 1.0
 
 Item {
     id: eye
+    property int flipped: 1
+    property int top_arc_angle: 0
+    property int bottom_arc_angle: 0
+    property int top_arc_y: 0
+    property int bottom_arc_y: 0
+    property int speed: 10
 
-    property bool isRight: false
+    function blink(){
+        blink_top.start()
+        blink_bottom.start()
+    }
 
-    width: parent.width / 2
-    height: width * 0.75
+    function setState(emotion){
+        state = emotion
+        eye.blink()
+    }
 
-    x: isRight ? width : 0
-    y: parent.height / 2 - height / 2
+    SequentialAnimation{
+        running: false
+        id: blink_top
+        loops: 1
+        ParallelAnimation{
+            PropertyAnimation { target: top_lid; property: "y"; easing.type: Easing.InOutCubic; to: 0; duration: 100 / (speed / 100) }
+            PropertyAnimation { target: top_arc; property: "xAxisRotation"; easing.type: Easing.InOutCubic; to: 0; duration: 100 / (speed / 100) }
+            PropertyAnimation { target: top_arc; property: "radiusY"; easing.type: Easing.InOutCubic; to: 0; duration: 100 / (speed / 100) }
+        }
+        ParallelAnimation{
+            PropertyAnimation { target: top_lid; property: "y"; easing.type: Easing.InOutCubic; to: top_arc_y; duration: 150 / (speed / 100) }
+            PropertyAnimation { target: top_arc; property: "xAxisRotation"; easing.type: Easing.InOutCubic; to: top_arc_angle; duration: 150 / (speed / 100) }
+            PropertyAnimation { target: top_arc; property: "radiusY"; easing.type: Easing.InOutCubic; to: iris.height / 20; duration: 100 / (speed / 100) }
+        }
+    }
 
-    state: EmotionHandler.NEUTRAL
+    SequentialAnimation{
+        running: false
+        id: blink_bottom
+        loops: 1
+        ParallelAnimation{
+            PropertyAnimation { target: bottom_lid; property: "y"; easing.type: Easing.InOutCubic; to: 0; duration: 100 / (speed / 100) }
+            PropertyAnimation { target: bottom_arc; property: "xAxisRotation"; easing.type: Easing.InOutCubic; to: 0; duration: 100 / (speed / 100) }
+            PropertyAnimation { target: bottom_arc; property: "radiusY"; easing.type: Easing.InOutCubic; to: 0; duration: 100 / (speed / 100) }
+        }
+        ParallelAnimation{
+            PropertyAnimation { target: bottom_lid; property: "y"; easing.type: Easing.InOutCubic; to: bottom_arc_y; duration: 150 / (speed / 100) }
+            PropertyAnimation { target: bottom_arc; property: "xAxisRotation"; easing.type: Easing.InOutCubic; to: bottom_arc_angle; duration: 150 / (speed / 100) }
+            PropertyAnimation { target: bottom_arc; property: "radiusY"; easing.type: Easing.InOutCubic; to: iris.height / 20; duration: 100 / (speed / 100) }
+        }
+    }
 
     states: [
         State {
+            name: EmotionHandler.NEUTRAL
+            PropertyChanges { target: top_arc; xAxisRotation: 0 }
+            PropertyChanges { target: bottom_arc; xAxisRotation: 0 }
+            PropertyChanges { target: bottom_arc; direction: PathArc.Counterclockwise}
+            PropertyChanges { target: eye; top_arc_angle: 0 }
+            PropertyChanges { target: eye; bottom_arc_angle: 0 }
+            PropertyChanges { target: eye; top_arc_y: -iris.height / 4}
+            PropertyChanges { target: eye; bottom_arc_y: iris.height / 4}
+        },
+        State {
             name: EmotionHandler.ANGRY
-            PropertyChanges {
-                target: topLid
-            }
-        },
-        State {
-            name: EmotionHandler.SAD
-            PropertyChanges {
-                target: topLid
-            }
-        },
-        State {
-            name: EmotionHandler.SUPRISED
-            PropertyChanges {
-                target: topLid
-            }
+            PropertyChanges { target: top_arc; xAxisRotation: 20 * eye.flipped }
+            PropertyChanges { target: bottom_arc; xAxisRotation: 5 * eye.flipped }
+            PropertyChanges { target: bottom_arc; direction: PathArc.Counterclockwise}
+            PropertyChanges { target: eye; top_arc_angle: 20 * eye.flipped }
+            PropertyChanges { target: eye; bottom_arc_angle: 5 * eye.flipped }
+            PropertyChanges { target: eye; top_arc_y: -iris.height / 10}
+            PropertyChanges { target: eye; bottom_arc_y: iris.height / 10}
         },
         State {
             name: EmotionHandler.HAPPY
-            PropertyChanges {
-                target: topLid
-            }
-        }
-    ]
-
-    transitions: [
-        Transition {
-            from: EmotionHandler.NEUTRAL
-            to: EmotionHandler.ANGRY
-            reversible: true
-            // TODO: Implement angry animation
+            PropertyChanges { target: top_arc; xAxisRotation: 0 }
+            PropertyChanges { target: bottom_arc; xAxisRotation: 0 }
+            PropertyChanges { target: bottom_arc; direction: PathArc.Counterclockwise}
+            PropertyChanges { target: eye; top_arc_angle: 0 }
+            PropertyChanges { target: eye; bottom_arc_angle: 0 }
+            PropertyChanges { target: eye; top_arc_y: -iris.height / 4}
+            PropertyChanges { target: eye; bottom_arc_y: iris.height / 4}
         },
-        Transition {
-            from: EmotionHandler.NEUTRAL
-            to: EmotionHandler.SAD
-            reversible: true
-            // TODO: Implement sad animation
+        State {
+            name: EmotionHandler.SAD
+            PropertyChanges { target: top_arc; xAxisRotation: 0 }
+            PropertyChanges { target: bottom_arc; xAxisRotation: 0 }
+            PropertyChanges { target: bottom_arc; direction: PathArc.Counterclockwise}
+            PropertyChanges { target: eye; top_arc_angle: 0 }
+            PropertyChanges { target: eye; bottom_arc_angle: 0 }
+            PropertyChanges { target: eye; top_arc_y: -iris.height / 4}
+            PropertyChanges { target: eye; bottom_arc_y: iris.height / 4}
         },
-        Transition {
-            from: EmotionHandler.NEUTRAL
-            to: EmotionHandler.SUPRISED
-            reversible: true
-            // TODO: Implement suprised animation
-        },
-        Transition {
-            from: EmotionHandler.NEUTRAL
-            to: EmotionHandler.HAPPY
-            reversible: true
-            // TODO: Implement happy animation
+        State {
+            name: EmotionHandler.SUPRISED
+            PropertyChanges { target: top_arc; xAxisRotation: 0 }
+            PropertyChanges { target: bottom_arc; xAxisRotation: 0 }
+            PropertyChanges { target: bottom_arc; direction: PathArc.Counterclockwise}
+            PropertyChanges { target: eye; top_arc_angle: 0 }
+            PropertyChanges { target: eye; bottom_arc_angle: 0 }
+            PropertyChanges { target: eye; top_arc_y: -iris.height / 4}
+            PropertyChanges { target: eye; bottom_arc_y: iris.height / 4}
         }
     ]
 
     Rectangle {
         id: iris
+        width: parent.width < parent.height ? parent.width * 0.8 : parent.height * 0.8
+        height: width
+        color: "#eeeeff"
+        radius: width*0.5
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+        clip: true
 
-        anchors.centerIn: parent
-
-        width: parent.width * 0.8
-        height: parent.height
-
-        x: parent.width * 0.1
-
-        color: "white"
-        radius: width * 0.5
-
-        Pupil {
+        Rectangle {
             id: pupil
+            width: parent.width< parent.height ? parent.width * 0.2 : parent.height * 0.2
+            height: width
+            color: "#000000"
+            radius: width * 0.5
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
         }
     }
 
-    Lid {
-        id: topLid
-    }
+    Rectangle {
+        id: top_lid
+        anchors.horizontalCenter: parent.horizontalCenter
+        y: iris.height / 10
 
-    Lid {
-        id: bottomLid
-        inverse: true
-    }
+        Shape {
+            id: top_lid_shape
+            anchors.fill: parent
 
-    function blink() {
-        // TODO: Implement blink animation
+            ShapePath {
+                id: path
+                fillColor: "black"
+                strokeColor: "black"
+                startX: -iris.width / 2
+                startY: -eye.height / 2
+                PathLine{
+                    x: -iris.width / 2
+                    y: eye.height / 2
+                }
+                PathArc {
+                    id: top_arc
+                    x: iris.width / 2
+                    y: eye.height / 2
+                    radiusX: 200; radiusY: iris.height / 20
+                    useLargeArc: false
+                    direction: PathArc.Clockwise
+                    xAxisRotation: 0
+                }
+                PathLine{
+                    x: iris.width / 2
+                    y: 0
+                }
+                PathLine{
+                    x: -iris.width / 2
+                    y: 0
+                }
+            }
+        }
+    }
+    Rectangle {
+        id: bottom_lid
+        anchors.horizontalCenter: parent.horizontalCenter
+        y: -iris.height / 10
+
+        Shape {
+            id: bottom_lid_shape
+            anchors.fill: parent
+
+            ShapePath {
+                id: p2
+                fillColor: "black"
+                strokeColor: "black"
+                startX: -iris.width / 2
+                startY: iris.height
+                PathLine{
+                    x: -iris.width / 2
+                    y: eye.height / 2
+                }
+                PathArc {
+                    id: bottom_arc
+                    x: iris.width / 2
+                    y: eye.height / 2
+                    radiusX: 200; radiusY: iris.height / 20
+
+                    useLargeArc: false
+                    direction: PathArc.Counterclockwise
+                    xAxisRotation: 0
+                }
+                PathLine{
+                    x: iris.width / 2
+                    y: eye.height
+                }
+                PathLine{
+                    x: -iris.width / 2
+                    y: eye.height
+                }
+            }
+        }
     }
 }

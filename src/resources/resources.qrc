@@ -1,8 +1,6 @@
 <RCC>
     <qresource prefix="/resources">
-        <file>main.qml</file>
         <file>Eye.qml</file>
-        <file>Pupil.qml</file>
-        <file>Lid.qml</file>
+        <file>main.qml</file>
     </qresource>
 </RCC>
