@@ -124,6 +124,19 @@ Item {
             radius: width * 0.5
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
+
+            Rectangle {
+                id: speckle
+                width: parent.width / 4
+                height: width
+                color: "#eeeeff"
+                radius: width * 0.5
+                anchors.right: parent.right
+                anchors.rightMargin: width / 1.5
+                anchors.top: parent.top
+                anchors.topMargin: height / 1.5
+            }
+
         }
     }
 
