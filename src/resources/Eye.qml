@@ -6,11 +6,15 @@ Item {
     id: eye
     visible: false
     property int flipped: 1
-    property int top_arc_angle: 0
-    property int bottom_arc_angle: 0
-    property int top_arc_y: 0
-    property int bottom_arc_y: 0
+    property int topArcAngle: 0
+    property int bottomArcAngle: 0
+    property int topArcY: 0
+    property int bottomArcY: 0
+    property int pupilX: 0
+    property int pupilY: 0
     property int speed: 100
+
+    onActiveFocusChanged: window.pupilSize = pupil.width
 
      Timer {
          id: startup
@@ -19,8 +23,8 @@ Item {
      }
 
     function blink(){
-        blink_top.start()
-        blink_bottom.start()
+        blinkTop.start()
+        blinkBottom.start()
         startup.start()
     }
 
@@ -29,35 +33,49 @@ Item {
         eye.blink()
     }
 
+    function moveEye(x,y){
+        pupilX = x
+        pupilY = y
+        moveEyeAnimation.start()
+    }
+
+    ParallelAnimation{
+        running: false
+        id: moveEyeAnimation
+        loops: 1
+        PropertyAnimation { target: pupil; property: "anchors.horizontalCenterOffset"; easing.type: Easing.InOutCubic; to: pupilX; duration: 500 }
+        PropertyAnimation { target: pupil; property: "anchors.verticalCenterOffset"; easing.type: Easing.InOutCubic; to: pupilY; duration: 500 }
+    }
+
     SequentialAnimation{
         running: false
-        id: blink_top
+        id: blinkTop
         loops: 1
         ParallelAnimation{
             PropertyAnimation { target: top_lid; property: "y"; easing.type: Easing.InOutCubic; to: 0; duration: 100 / (speed / 100) }
             PropertyAnimation { target: top_arc; property: "xAxisRotation"; easing.type: Easing.InOutCubic; to: 0; duration: 100 / (speed / 100) }
-            PropertyAnimation { target: top_arc; property: "radiusY"; easing.type: Easing.InOutCubic; to: 0; duration: 100 / (speed / 100) }
+            PropertyAnimation { target: top_arc; property: "radiusY"; easing.type: Easing.InOutCubic; to: 1; duration: 100 / (speed / 100) }
         }
         ParallelAnimation{
-            PropertyAnimation { target: top_lid; property: "y"; easing.type: Easing.InOutCubic; to: top_arc_y; duration: 150 / (speed / 100) }
-            PropertyAnimation { target: top_arc; property: "xAxisRotation"; easing.type: Easing.InOutCubic; to: top_arc_angle; duration: 150 / (speed / 100) }
-            PropertyAnimation { target: top_arc; property: "radiusY"; easing.type: Easing.InOutCubic; to: iris.height/15; duration: 150 / (speed / 100) }
+            PropertyAnimation { target: top_lid; property: "y"; easing.type: Easing.InOutCubic; to: topArcY; duration: 150 / (speed / 100) }
+            PropertyAnimation { target: top_arc; property: "xAxisRotation"; easing.type: Easing.InOutCubic; to: topArcAngle; duration: 150 / (speed / 100) }
+            PropertyAnimation { target: top_arc; property: "radiusY"; easing.type: Easing.InOutCubic; to: window.height/15; duration: 150 / (speed / 100) }
         }
     }
 
     SequentialAnimation{
         running: false
-        id: blink_bottom
+        id: blinkBottom
         loops: 1
         ParallelAnimation{
             PropertyAnimation { target: bottom_lid; property: "y"; easing.type: Easing.InOutCubic; to: 0; duration: 100 / (speed / 100) }
             PropertyAnimation { target: bottom_arc; property: "xAxisRotation"; easing.type: Easing.InOutCubic; to: 0; duration: 100 / (speed / 100) }
-            PropertyAnimation { target: bottom_arc; property: "radiusY"; easing.type: Easing.InOutCubic; to: 0; duration: 100 / (speed / 100) }
+            PropertyAnimation { target: bottom_arc; property: "radiusY"; easing.type: Easing.InOutCubic; to: 1; duration: 100 / (speed / 100) }
         }
         ParallelAnimation{
-            PropertyAnimation { target: bottom_lid; property: "y"; easing.type: Easing.InOutCubic; to: bottom_arc_y; duration: 150 / (speed / 100) }
-            PropertyAnimation { target: bottom_arc; property: "xAxisRotation"; easing.type: Easing.InOutCubic; to: bottom_arc_angle; duration: 150 / (speed / 100) }
-            PropertyAnimation { target: bottom_arc; property: "radiusY"; easing.type: Easing.InOutCubic; to: iris.height/15; duration: 150 / (speed / 100) }
+            PropertyAnimation { target: bottom_lid; property: "y"; easing.type: Easing.InOutCubic; to: bottomArcY; duration: 150 / (speed / 100) }
+            PropertyAnimation { target: bottom_arc; property: "xAxisRotation"; easing.type: Easing.InOutCubic; to: bottomArcAngle; duration: 150 / (speed / 100) }
+            PropertyAnimation { target: bottom_arc; property: "radiusY"; easing.type: Easing.InOutCubic; to: window.height/15; duration: 150 / (speed / 100) }
         }
     }
 
@@ -67,10 +85,10 @@ Item {
             PropertyChanges { target: top_arc; xAxisRotation: 0 }
             PropertyChanges { target: bottom_arc; xAxisRotation: 0 }
             PropertyChanges { target: bottom_arc; direction: PathArc.Counterclockwise}
-            PropertyChanges { target: eye; top_arc_angle: 0 }
-            PropertyChanges { target: eye; bottom_arc_angle: 0 }
-            PropertyChanges { target: eye; top_arc_y: -iris.height/4}
-            PropertyChanges { target: eye; bottom_arc_y: iris.height/4}
+            PropertyChanges { target: eye; topArcAngle: 0 }
+            PropertyChanges { target: eye; bottomArcAngle: 0 }
+            PropertyChanges { target: eye; topArcY: -iris.height/4}
+            PropertyChanges { target: eye; bottomArcY: iris.height/4}
             PropertyChanges { target: blink_timer; interval: 3000}
         },
         State {
@@ -78,21 +96,21 @@ Item {
             PropertyChanges { target: top_arc; xAxisRotation: 20 * eye.flipped }
             PropertyChanges { target: bottom_arc; xAxisRotation: 5 * eye.flipped }
             PropertyChanges { target: bottom_arc; direction: PathArc.Counterclockwise}
-            PropertyChanges { target: eye; top_arc_angle: 20 * eye.flipped }
-            PropertyChanges { target: eye; bottom_arc_angle: 5 * eye.flipped }
-            PropertyChanges { target: eye; top_arc_y: -iris.height/10}
-            PropertyChanges { target: eye; bottom_arc_y: iris.height/10}
+            PropertyChanges { target: eye; topArcAngle: 20 * eye.flipped }
+            PropertyChanges { target: eye; bottomArcAngle: 5 * eye.flipped }
+            PropertyChanges { target: eye; topArcY: -iris.height/10}
+            PropertyChanges { target: eye; bottomArcY: iris.height/10}
             PropertyChanges { target: blink_timer; interval: 3000}
         },
         State {
             name: EmotionHandler.HAPPY
             PropertyChanges { target: top_arc; xAxisRotation: 0 }
-            PropertyChanges { target: bottom_arc; xAxisRotation: 4 * eye.flipped }
+            PropertyChanges { target: bottom_arc; xAxisRotation: -3 * eye.flipped }
             PropertyChanges { target: bottom_arc; direction: PathArc.Clockwise}
-            PropertyChanges { target: eye; top_arc_angle: 0 }
-            PropertyChanges { target: eye; bottom_arc_angle: 4 * eye.flipped }
-            PropertyChanges { target: eye; top_arc_y: -iris.height/2}
-            PropertyChanges { target: eye; bottom_arc_y: iris.height/3}
+            PropertyChanges { target: eye; topArcAngle: 0 }
+            PropertyChanges { target: eye; bottomArcAngle: -3 * eye.flipped }
+            PropertyChanges { target: eye; topArcY: -iris.height/2}
+            PropertyChanges { target: eye; bottomArcY: iris.height/3}
             PropertyChanges { target: blink_timer; interval: 1000}
         },
         State {
@@ -100,10 +118,10 @@ Item {
             PropertyChanges { target: top_arc; xAxisRotation: -20 * eye.flipped }
             PropertyChanges { target: bottom_arc; xAxisRotation: -1 * eye.flipped }
             PropertyChanges { target: bottom_arc; direction: PathArc.Counterclockwise}
-            PropertyChanges { target: eye; top_arc_angle: -20 * eye.flipped }
-            PropertyChanges { target: eye; bottom_arc_angle: -10 * eye.flipped }
-            PropertyChanges { target: eye; top_arc_y: -iris.height/10}
-            PropertyChanges { target: eye; bottom_arc_y: iris.height/10}
+            PropertyChanges { target: eye; topArcAngle: -20 * eye.flipped }
+            PropertyChanges { target: eye; bottomArcAngle: -10 * eye.flipped }
+            PropertyChanges { target: eye; topArcY: -iris.height/10}
+            PropertyChanges { target: eye; bottomArcY: iris.height/10}
             PropertyChanges { target: blink_timer; interval: 800}
         },
         State {
@@ -111,10 +129,10 @@ Item {
             PropertyChanges { target: top_arc; xAxisRotation: 0 }
             PropertyChanges { target: bottom_arc; xAxisRotation: 0 }
             PropertyChanges { target: bottom_arc; direction: PathArc.Counterclockwise}
-            PropertyChanges { target: eye; top_arc_angle: 0 }
-            PropertyChanges { target: eye; bottom_arc_angle: 0 }
-            PropertyChanges { target: eye; top_arc_y: -iris.height/2}
-            PropertyChanges { target: eye; bottom_arc_y: iris.height/2}
+            PropertyChanges { target: eye; topArcAngle: 0 }
+            PropertyChanges { target: eye; bottomArcAngle: 0 }
+            PropertyChanges { target: eye; topArcY: -iris.height/2}
+            PropertyChanges { target: eye; bottomArcY: iris.height/2}
             PropertyChanges { target: blink_timer; interval: 4000}
         }
     ]
@@ -176,7 +194,7 @@ Item {
                     id: top_arc
                     x: iris.width/2
                     y: eye.height/2
-                    radiusX: 200; radiusY: iris.height/15
+                    radiusX: 200; radiusY: window.height/15
                     useLargeArc: false
                     direction: PathArc.Clockwise
                     xAxisRotation: 0
@@ -212,7 +230,7 @@ Item {
                     id: bottom_arc
                     x: iris.width/2
                     y: eye.height/2
-                    radiusX: 200; radiusY: iris.height/15
+                    radiusX: 200; radiusY: window.height/15
 
                     useLargeArc: false
                     direction: PathArc.Counterclockwise

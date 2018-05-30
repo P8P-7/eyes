@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
 
     auto *emotion = root->findChild<eyes::EmotionHandler*>("emotion");
 
-    emotion->setEmotion(Emotion::ANGRY);
+    emotion->setEmotion(Emotion::SAD);
 
     subscriber.bind(MessageCarrier::MessageCase::kEmotionMessage, [&emotion](const MessageCarrier &carrier){
         emotion->setEmotion(carrier.emotionmessage().emotion());

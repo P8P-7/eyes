@@ -12,6 +12,8 @@ Window {
     visibility: "FullScreen"
     color: "#000000"
 
+    property int pupilSize: 0
+
     EmotionHandler {
         objectName: "emotion"
         onEmotionChanged: {
@@ -48,12 +50,25 @@ Window {
             eyeRight.setState(emotion)
         }
 
+        function moveEyes(){
+            var randomX = Math.random() * (eyeLeft.width / 4) * (Math.random() < 0.5 ? -1 : 1)
+            var randomY = Math.random() * (eyeLeft.width / 10) * (Math.random() < 0.5 ? -1 : 1)
+            eyeLeft.moveEye(randomX,randomY)
+            eyeRight.moveEye(randomX,randomY)
+        }
+
         onClicked: row.blink()
 
         Timer {
             id: blink_timer
             interval: 3000; running: true; repeat: true
             onTriggered: row.blink()
+        }
+
+        Timer {
+            id: eyeMovementTimer
+            interval: 4980; running: true; repeat: true
+            onTriggered: row.moveEyes()
         }
 
         Startup{
