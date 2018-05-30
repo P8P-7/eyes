@@ -4,11 +4,12 @@ import QtQuick.Shapes 1.0
 import goliath.eyes 1.0
 
 Window {
+    id: window
     visible: true
     width: 640
     height: 480
     title: qsTr("Hello World")
-//  visibility: "FullScreen"
+    visibility: "FullScreen"
     color: "#000000"
 
     EmotionHandler {
@@ -50,8 +51,14 @@ Window {
         onClicked: row.blink()
 
         Timer {
+            id: blink_timer
             interval: 3000; running: true; repeat: true
             onTriggered: row.blink()
+        }
+
+        Startup{
+            width: parent.width
+            height: parent.height
         }
 
         Eye {
@@ -60,9 +67,7 @@ Window {
             anchors.left: parent.left
             anchors.bottom: parent.bottom
             anchors.top: parent.top
-            transformOrigin: Item.Center
             flipped: 1
-            state: EmotionHandler.NEUTRAL
             clip: true
         }
 
@@ -72,9 +77,7 @@ Window {
             anchors.right: parent.right
             anchors.bottom: parent.bottom
             anchors.top: parent.top
-            transformOrigin: Item.Center
             flipped: -1
-            state: EmotionHandler.NEUTRAL
             clip: true
         }
     }
