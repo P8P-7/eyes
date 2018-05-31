@@ -59,7 +59,7 @@ Item {
         ParallelAnimation{
             PropertyAnimation { target: top_lid; property: "y"; easing.type: Easing.InOutCubic; to: topArcY; duration: 150 / (speed / 100) }
             PropertyAnimation { target: top_arc; property: "xAxisRotation"; easing.type: Easing.InOutCubic; to: topArcAngle; duration: 150 / (speed / 100) }
-            PropertyAnimation { target: top_arc; property: "radiusY"; easing.type: Easing.InOutCubic; to: window.height/15; duration: 150 / (speed / 100) }
+            PropertyAnimation { target: top_arc; property: "radiusY"; easing.type: Easing.InOutCubic; to: window.height/10; duration: 150 / (speed / 100) }
         }
     }
 

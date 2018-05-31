@@ -9,7 +9,7 @@ Window {
     width: 640
     height: 480
     title: qsTr("Hello World")
-    visibility: "FullScreen"
+//    visibility: "FullScreen"
     color: "#000000"
 
     property int pupilSize: 0
@@ -52,7 +52,7 @@ Window {
 
         function moveEyes(){
             var randomX = Math.random() * (eyeLeft.width / 4) * (Math.random() < 0.5 ? -1 : 1)
-            var randomY = Math.random() * (eyeLeft.width / 10) * (Math.random() < 0.5 ? -1 : 1)
+            var randomY = Math.random() * (eyeLeft.width / 12) * (Math.random() < 0.5 ? -1 : 1)
             eyeLeft.moveEye(randomX,randomY)
             eyeRight.moveEye(randomX,randomY)
         }
