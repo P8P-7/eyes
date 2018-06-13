@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
 
     auto *emotion = root->findChild<eyes::EmotionHandler*>("emotion");
 
-    emotion->setEmotion(proto::Emotion::SUPRISED);
+    emotion->setEmotion(proto::Emotion::SAD);
 
     subscriber.bind(proto::MessageCarrier::MessageCase::kEmotionMessage, [&emotion](const proto::MessageCarrier &carrier){
         emotion->setEmotion(carrier.emotionmessage().emotion());

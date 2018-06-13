@@ -1,6 +1,8 @@
 <RCC>
     <qresource prefix="/resources">
+        <file>Startup.qml</file>
         <file>Eye.qml</file>
         <file>main.qml</file>
+        <file>logo_animation.gif</file>
     </qresource>
 </RCC>

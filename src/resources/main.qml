@@ -4,12 +4,15 @@ import QtQuick.Shapes 1.0
 import goliath.eyes 1.0
 
 Window {
+    id: window
     visible: true
     width: 640
     height: 480
     title: qsTr("Hello World")
-//  visibility: "FullScreen"
+//    visibility: "FullScreen"
     color: "#000000"
+
+    property int pupilSize: 0
 
     EmotionHandler {
         objectName: "emotion"
@@ -47,11 +50,30 @@ Window {
             eyeRight.setState(emotion)
         }
 
+        function moveEyes(){
+            var randomX = Math.random() * (eyeLeft.width / 4) * (Math.random() < 0.5 ? -1 : 1)
+            var randomY = Math.random() * (eyeLeft.width / 12) * (Math.random() < 0.5 ? -1 : 1)
+            eyeLeft.moveEye(randomX,randomY)
+            eyeRight.moveEye(randomX,randomY)
+        }
+
         onClicked: row.blink()
 
         Timer {
+            id: blink_timer
             interval: 3000; running: true; repeat: true
             onTriggered: row.blink()
+        }
+
+        Timer {
+            id: eyeMovementTimer
+            interval: 4980; running: true; repeat: true
+            onTriggered: row.moveEyes()
+        }
+
+        Startup{
+            width: parent.width
+            height: parent.height
         }
 
         Eye {
@@ -60,9 +82,7 @@ Window {
             anchors.left: parent.left
             anchors.bottom: parent.bottom
             anchors.top: parent.top
-            transformOrigin: Item.Center
             flipped: 1
-            state: EmotionHandler.NEUTRAL
             clip: true
         }
 
@@ -72,9 +92,7 @@ Window {
             anchors.right: parent.right
             anchors.bottom: parent.bottom
             anchors.top: parent.top
-            transformOrigin: Item.Center
             flipped: -1
-            state: EmotionHandler.NEUTRAL
             clip: true
         }
     }
