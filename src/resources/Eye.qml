@@ -7,8 +7,8 @@ Item {
     property int flipped: 1
     property int top_arc_angle: 0
     property int bottom_arc_angle: 0
-    property int top_arc_y: 0
-    property int bottom_arc_y: 0
+    property int top_arc_y: -iris.height / 4
+    property int bottom_arc_y: iris.height / 4
     property int speed: 10
 
     function blink(){

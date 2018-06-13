@@ -13,13 +13,13 @@ namespace goliath::eyes {
         // Sadly no better solution...
         // See https://forum.qt.io/topic/77111/expose-an-enum-from-a-non-qobject-member-variable-to-qml/7
         enum EmotionValue {
-            NEUTRAL = Emotion::NEUTRAL,
-            ANGRY = Emotion::ANGRY,
-            SAD = Emotion::SAD,
-            SUPRISED = Emotion::SUPRISED,
-            HAPPY = Emotion::HAPPY,
-            WINK_LEFT = Emotion::WINK_LEFT,
-            WINK_RIGHT = Emotion::WINK_RIGHT
+            NEUTRAL = proto::Emotion::NEUTRAL,
+            ANGRY = proto::Emotion::ANGRY,
+            SAD = proto::Emotion::SAD,
+            SUPRISED = proto::Emotion::SUPRISED,
+            HAPPY = proto::Emotion::HAPPY,
+            WINK_LEFT = proto::Emotion::WINK_LEFT,
+            WINK_RIGHT = proto::Emotion::WINK_RIGHT
         };
 
         Q_ENUM(EmotionValue)
@@ -27,7 +27,7 @@ namespace goliath::eyes {
         EmotionHandler();
 
         void setEmotion(const EmotionValue &emotion);
-        void setEmotion(const Emotion &emotion);
+        void setEmotion(const proto::Emotion &emotion);
 
         EmotionValue emotion() const;
 

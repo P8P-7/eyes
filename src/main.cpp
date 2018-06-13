@@ -4,7 +4,7 @@
 #include <QQuickView>
 
 #include <MessageCarrier.pb.h>
-#include <goliath/zmq_messaging.h>
+#include <goliath/zmq-messaging.h>
 
 #include "emotion_handler.h"
 
@@ -27,9 +27,9 @@ int main(int argc, char *argv[]) {
 
     auto *emotion = root->findChild<eyes::EmotionHandler*>("emotion");
 
-    emotion->setEmotion(Emotion::ANGRY);
+    emotion->setEmotion(proto::Emotion::SUPRISED);
 
-    subscriber.bind(MessageCarrier::MessageCase::kEmotionMessage, [&emotion](const MessageCarrier &carrier){
+    subscriber.bind(proto::MessageCarrier::MessageCase::kEmotionMessage, [&emotion](const proto::MessageCarrier &carrier){
         emotion->setEmotion(carrier.emotionmessage().emotion());
     });
 
