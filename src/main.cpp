@@ -12,7 +12,7 @@ using namespace goliath;
 
 int main(int argc, char *argv[]) {
     zmq::context_t context(1);
-    messaging::ZmqSubscriber subscriber(context, "localhost", 5558);
+    messaging::ZmqSubscriber subscriber(context, "localhost", 5556);
 
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
@@ -27,11 +27,18 @@ int main(int argc, char *argv[]) {
 
     auto *emotion = root->findChild<eyes::EmotionHandler*>("emotion");
 
-    emotion->setEmotion(proto::Emotion::SAD);
+    emotion->setEmotion(proto::repositories::EmotionRepository::NEUTRAL);
 
-    subscriber.bind(proto::MessageCarrier::MessageCase::kEmotionMessage, [&emotion](const proto::MessageCarrier &carrier){
-        emotion->setEmotion(carrier.emotionmessage().emotion());
+    subscriber.bind(proto::MessageCarrier::MessageCase::kSynchronizeMessage, [&emotion](const proto::MessageCarrier &carrier){
+        for (const auto &message : carrier.synchronizemessage().messages()) {
+            if (message.Is<proto::repositories::EmotionRepository>()) {
+                proto::repositories::EmotionRepository emotionRepository;
+                message.UnpackTo(&emotionRepository);
+
+                emotion->setEmotion(emotionRepository.emotion());
+            }
+        }
     });
 
-    return app.exec();
+    return QGuiApplication::exec();
 }

@@ -17,7 +17,5 @@ find_package(Qt5 ${QT_MIN_VERSION}
         REQUIRED
         )
 
-find_package(Qt5QuickCompiler REQUIRED)
-
 add_subdirectory(third_party)
 add_subdirectory(src)

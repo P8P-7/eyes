@@ -2,7 +2,7 @@
 
 #include <QObject>
 
-#include <EmotionMessage.pb.h>
+#include <repositories/EmotionRepository.pb.h>
 
 namespace goliath::eyes {
     class EmotionHandler : public QObject {
@@ -13,13 +13,13 @@ namespace goliath::eyes {
         // Sadly no better solution...
         // See https://forum.qt.io/topic/77111/expose-an-enum-from-a-non-qobject-member-variable-to-qml/7
         enum EmotionValue {
-            NEUTRAL = proto::Emotion::NEUTRAL,
-            ANGRY = proto::Emotion::ANGRY,
-            SAD = proto::Emotion::SAD,
-            SUPRISED = proto::Emotion::SUPRISED,
-            HAPPY = proto::Emotion::HAPPY,
-            WINK_LEFT = proto::Emotion::WINK_LEFT,
-            WINK_RIGHT = proto::Emotion::WINK_RIGHT
+            NEUTRAL = proto::repositories::EmotionRepository::NEUTRAL,
+            ANGRY = proto::repositories::EmotionRepository::ANGRY,
+            SAD = proto::repositories::EmotionRepository::SAD,
+            SUPRISED = proto::repositories::EmotionRepository::SUPRISED,
+            HAPPY = proto::repositories::EmotionRepository::HAPPY,
+            WINK_LEFT = proto::repositories::EmotionRepository::WINK_LEFT,
+            WINK_RIGHT = proto::repositories::EmotionRepository::WINK_RIGHT
         };
 
         Q_ENUM(EmotionValue)
@@ -27,7 +27,7 @@ namespace goliath::eyes {
         EmotionHandler();
 
         void setEmotion(const EmotionValue &emotion);
-        void setEmotion(const proto::Emotion &emotion);
+        void setEmotion(const proto::repositories::EmotionRepository::Emotion &emotion);
 
         EmotionValue emotion() const;
 

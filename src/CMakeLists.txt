@@ -3,7 +3,7 @@ set(SOURCES
         emotion_handler.cpp
         )
 
-qtquick_compiler_add_resources(RESOURCES resources/resources.qrc)
+qt5_add_resources(RESOURCES resources/resources.qrc)
 
 add_executable(${PROJECT_NAME}
         ${SOURCES}

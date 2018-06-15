@@ -15,6 +15,6 @@ void eyes::EmotionHandler::setEmotion(const EmotionValue& emotion) {
     emit emotionChanged();
 }
 
-void eyes::EmotionHandler::setEmotion(const proto::Emotion& emotion) {
+void eyes::EmotionHandler::setEmotion(const proto::repositories::EmotionRepository::Emotion& emotion) {
     setEmotion(static_cast<EmotionValue>(emotion));
 }
