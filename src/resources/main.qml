@@ -9,7 +9,7 @@ Window {
     width: 480
     height: 320
     title: qsTr("Hello World")
-    visibility: "FullScreen"
+//    visibility: "FullScreen"
     color: "#000000"
 
     property int pupilSize: 0

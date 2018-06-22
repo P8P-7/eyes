@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
 
     auto *emotion = root->findChild<eyes::EmotionHandler*>("emotion");
 
-    emotion->setEmotion(proto::repositories::EmotionRepository::NEUTRAL);
+    emotion->setEmotion(eyes::EmotionHandler::EmotionValue::ANGRY);
 
     subscriber.bind(proto::MessageCarrier::MessageCase::kSynchronizeMessage, [&emotion](const proto::MessageCarrier &carrier){
         for (const auto &message : carrier.synchronizemessage().messages()) {
