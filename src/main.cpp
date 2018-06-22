@@ -18,6 +18,10 @@ int main(int argc, char *argv[]) {
 
     QGuiApplication app(argc, argv);
 
+    QSurfaceFormat format = QSurfaceFormat::defaultFormat();
+    format.setSwapInterval(5);
+    QSurfaceFormat::setDefaultFormat(format);
+
     qmlRegisterType<eyes::EmotionHandler>("goliath.eyes", 1, 0, "EmotionHandler");
 
     QQmlApplicationEngine engine;
@@ -27,7 +31,7 @@ int main(int argc, char *argv[]) {
 
     auto *emotion = root->findChild<eyes::EmotionHandler*>("emotion");
 
-    emotion->setEmotion(Emotion::SAD);
+    emotion->setEmotion(Emotion::ANGRY);
 
     subscriber.bind(MessageCarrier::MessageCase::kEmotionMessage, [&emotion](const MessageCarrier &carrier){
         emotion->setEmotion(carrier.emotionmessage().emotion());

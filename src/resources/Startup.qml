@@ -7,12 +7,19 @@ Item {
 
     Timer {
         id: blink_timer
-        interval: 2800; running: true; repeat: false
+        interval: 4800; running: true; repeat: false
         onTriggered: visible = false
+    }
+
+    Timer {
+        id: start_timer
+        interval: 2000; running: true; repeat: false
+        onTriggered: animation.playing = true
     }
 
     AnimatedImage {
         id: animation
+        playing: false
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         fillMode: Image.PreserveAspectFit

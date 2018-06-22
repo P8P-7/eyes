@@ -12,13 +12,13 @@ Item {
     property int bottomArcY: 0
     property int pupilX: 0
     property int pupilY: 0
-    property int speed: 100
+    property int speed: 30
 
     onActiveFocusChanged: window.pupilSize = pupil.width
 
      Timer {
          id: startup
-         interval: 3200; running: false; repeat: false
+         interval: 5000; running: false; repeat: false
          onTriggered: visible = true
      }
 
@@ -56,10 +56,13 @@ Item {
             PropertyAnimation { target: top_arc; property: "xAxisRotation"; easing.type: Easing.InOutCubic; to: 0; duration: 100 / (speed / 100) }
             PropertyAnimation { target: top_arc; property: "radiusY"; easing.type: Easing.InOutCubic; to: 1; duration: 100 / (speed / 100) }
         }
+        PauseAnimation {
+            duration: 500
+        }
         ParallelAnimation{
             PropertyAnimation { target: top_lid; property: "y"; easing.type: Easing.InOutCubic; to: topArcY; duration: 150 / (speed / 100) }
             PropertyAnimation { target: top_arc; property: "xAxisRotation"; easing.type: Easing.InOutCubic; to: topArcAngle; duration: 150 / (speed / 100) }
-            PropertyAnimation { target: top_arc; property: "radiusY"; easing.type: Easing.InOutCubic; to: window.height/10; duration: 150 / (speed / 100) }
+            PropertyAnimation { target: top_arc; property: "radiusY"; easing.type: Easing.InOutCubic; to: window.height/8; duration: 150 / (speed / 100) }
         }
     }
 
@@ -71,6 +74,9 @@ Item {
             PropertyAnimation { target: bottom_lid; property: "y"; easing.type: Easing.InOutCubic; to: 0; duration: 100 / (speed / 100) }
             PropertyAnimation { target: bottom_arc; property: "xAxisRotation"; easing.type: Easing.InOutCubic; to: 0; duration: 100 / (speed / 100) }
             PropertyAnimation { target: bottom_arc; property: "radiusY"; easing.type: Easing.InOutCubic; to: 1; duration: 100 / (speed / 100) }
+        }
+        PauseAnimation {
+            duration: 500
         }
         ParallelAnimation{
             PropertyAnimation { target: bottom_lid; property: "y"; easing.type: Easing.InOutCubic; to: bottomArcY; duration: 150 / (speed / 100) }
@@ -89,7 +95,7 @@ Item {
             PropertyChanges { target: eye; bottomArcAngle: 0 }
             PropertyChanges { target: eye; topArcY: -iris.height/4}
             PropertyChanges { target: eye; bottomArcY: iris.height/4}
-            PropertyChanges { target: blink_timer; interval: 3000}
+            PropertyChanges { target: blink_timer; interval: 5000}
         },
         State {
             name: EmotionHandler.ANGRY
@@ -100,7 +106,7 @@ Item {
             PropertyChanges { target: eye; bottomArcAngle: 5 * eye.flipped }
             PropertyChanges { target: eye; topArcY: -iris.height/10}
             PropertyChanges { target: eye; bottomArcY: iris.height/10}
-            PropertyChanges { target: blink_timer; interval: 3000}
+            PropertyChanges { target: blink_timer; interval: 5000}
         },
         State {
             name: EmotionHandler.HAPPY
@@ -111,7 +117,7 @@ Item {
             PropertyChanges { target: eye; bottomArcAngle: -3 * eye.flipped }
             PropertyChanges { target: eye; topArcY: -iris.height/2}
             PropertyChanges { target: eye; bottomArcY: iris.height/3}
-            PropertyChanges { target: blink_timer; interval: 1000}
+            PropertyChanges { target: blink_timer; interval: 2500}
         },
         State {
             name: EmotionHandler.SAD
@@ -122,7 +128,7 @@ Item {
             PropertyChanges { target: eye; bottomArcAngle: -10 * eye.flipped }
             PropertyChanges { target: eye; topArcY: -iris.height/10}
             PropertyChanges { target: eye; bottomArcY: iris.height/10}
-            PropertyChanges { target: blink_timer; interval: 800}
+            PropertyChanges { target: blink_timer; interval: 2500}
         },
         State {
             name: EmotionHandler.SUPRISED
@@ -133,7 +139,7 @@ Item {
             PropertyChanges { target: eye; bottomArcAngle: 0 }
             PropertyChanges { target: eye; topArcY: -iris.height/2}
             PropertyChanges { target: eye; bottomArcY: iris.height/2}
-            PropertyChanges { target: blink_timer; interval: 4000}
+            PropertyChanges { target: blink_timer; interval: 8000}
         }
     ]
 

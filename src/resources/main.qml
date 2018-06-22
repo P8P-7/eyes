@@ -6,10 +6,10 @@ import goliath.eyes 1.0
 Window {
     id: window
     visible: true
-    width: 640
-    height: 480
+    width: 480
+    height: 320
     title: qsTr("Hello World")
-//    visibility: "FullScreen"
+    visibility: "FullScreen"
     color: "#000000"
 
     property int pupilSize: 0
@@ -32,12 +32,13 @@ Window {
         }
     }
 
-    MouseArea {
+    Rectangle {
         id: row
         x: 0
         y: 0
         width: parent.width
         height: parent.height
+        color: "#000000"
 
 
         function blink() {
@@ -57,7 +58,7 @@ Window {
             eyeRight.moveEye(randomX,randomY)
         }
 
-        onClicked: row.blink()
+//        onClicked: row.blink()
 
         Timer {
             id: blink_timer
@@ -96,5 +97,4 @@ Window {
             clip: true
         }
     }
-
 }
