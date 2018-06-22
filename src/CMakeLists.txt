@@ -3,9 +3,11 @@ set(SOURCES
         emotion_handler.cpp
         )
 
+qt5_add_resources(RESOURCES resources/resources.qrc)
+
 add_executable(${PROJECT_NAME}
-        resources/resources.qrc
         ${SOURCES}
+        ${RESOURCES}
         )
 
 target_link_libraries(${PROJECT_NAME}
