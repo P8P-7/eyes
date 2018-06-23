@@ -27,6 +27,7 @@ Window {
                 default:
                     eyeRight.setState(emotion);
                     eyeLeft.setState(emotion);
+                    row.blink();
                     break;
             }
         }
