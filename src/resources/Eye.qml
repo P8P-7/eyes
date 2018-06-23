@@ -91,10 +91,10 @@ Item {
             PropertyChanges { target: top_arc; xAxisRotation: 0 }
             PropertyChanges { target: bottom_arc; xAxisRotation: 0 }
             PropertyChanges { target: bottom_arc; direction: PathArc.Counterclockwise}
-            PropertyChanges { target: eye; topArcAngle: 0 }
-            PropertyChanges { target: eye; bottomArcAngle: 0 }
-            PropertyChanges { target: eye; topArcY: -iris.height/4}
-            PropertyChanges { target: eye; bottomArcY: iris.height/4}
+            PropertyChanges { target: eye; topArcAngle: 10 * eye.flipped }
+            PropertyChanges { target: eye; bottomArcAngle: -5 * eye.flipped }
+            PropertyChanges { target: eye; topArcY: -iris.height/3}
+            PropertyChanges { target: eye; bottomArcY: iris.height/3}
             PropertyChanges { target: blink_timer; interval: 5000}
         },
         State {
@@ -114,7 +114,7 @@ Item {
             PropertyChanges { target: bottom_arc; xAxisRotation: -3 * eye.flipped }
             PropertyChanges { target: bottom_arc; direction: PathArc.Clockwise}
             PropertyChanges { target: eye; topArcAngle: 0 }
-            PropertyChanges { target: eye; bottomArcAngle: -3 * eye.flipped }
+            PropertyChanges { target: eye; bottomArcAngle: -8 * eye.flipped }
             PropertyChanges { target: eye; topArcY: -iris.height/2}
             PropertyChanges { target: eye; bottomArcY: iris.height/3}
             PropertyChanges { target: blink_timer; interval: 2500}
@@ -155,7 +155,7 @@ Item {
 
         Rectangle {
             id: pupil
-            width: parent.width< parent.height ? parent.width * 0.2 : parent.height * 0.2
+            width: parent.width< parent.height ? parent.width * 0.3 : parent.height * 0.3
             height: width
             color: "#000000"
             radius: width * 0.5

@@ -8,7 +8,7 @@ Window {
     visible: true
     width: 480
     height: 320
-    title: qsTr("Hello World")
+    title: qsTr("Goliath II")
 //    visibility: "FullScreen"
     color: "#000000"
 
@@ -53,12 +53,10 @@ Window {
 
         function moveEyes(){
             var randomX = Math.random() * (eyeLeft.width / 4) * (Math.random() < 0.5 ? -1 : 1)
-            var randomY = Math.random() * (eyeLeft.width / 12) * (Math.random() < 0.5 ? -1 : 1)
+            var randomY = Math.random() * (eyeLeft.width / 15) * (Math.random() < 0.5 ? -1 : 1)
             eyeLeft.moveEye(randomX,randomY)
             eyeRight.moveEye(randomX,randomY)
         }
-
-//        onClicked: row.blink()
 
         Timer {
             id: blink_timer
@@ -68,7 +66,7 @@ Window {
 
         Timer {
             id: eyeMovementTimer
-            interval: 4980; running: true; repeat: true
+            interval: 4680; running: true; repeat: true
             onTriggered: row.moveEyes()
         }
 
