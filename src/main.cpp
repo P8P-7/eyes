@@ -69,5 +69,7 @@ int main(int argc, char *argv[]) {
                         }
                     });
 
+    subscriber.start();
+
     return QGuiApplication::exec();
 }
