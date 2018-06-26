@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
     }
 
     zmq::context_t context(1);
-    messaging::ZmqSubscriber subscriber(context, brokerAdress, 5556);
+    messaging::ZmqSubscriber subscriber(context, brokerAdress, 5555);
 
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
