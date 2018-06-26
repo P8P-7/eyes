@@ -58,6 +58,7 @@ int main(int argc, char *argv[]) {
 
     subscriber.bind(proto::MessageCarrier::MessageCase::kSynchronizeMessage,
                     [&emotion](const proto::MessageCarrier &carrier) {
+                        std::cout << "received emotion";
                         for (const auto &message : carrier.synchronizemessage().messages()) {
                             if (message.Is<proto::repositories::EmotionRepository>()) {
                                 proto::repositories::EmotionRepository emotionRepository;
